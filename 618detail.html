@@ -1,0 +1,266 @@
+<!doctype html>
+<html class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>618拼团</title>
+
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+
+    <!-- No Baidu Siteapp-->
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileColor" content="#0e90d2">
+
+    <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css">
+    <link rel="stylesheet" href="./assets/css/detail.css">
+</head>
+
+<body>
+    <img id="main-pic" src="./assets/img/null.png" alt="">
+    <div class="wrap">
+        <div id="title">
+
+        </div>
+        <div id="info">
+
+        </div>
+    </div>
+
+    <div class="copy-text">
+        <textarea style="position: absolute;top: -10000px;" name="" id="copy-wenan" cols="30" rows="10"></textarea>
+        <div id="copy-ctx">
+
+        </div>
+        <p> ...........</p>
+        <p> 复制这条消息。。。。。</p>
+        <button class="copy-btn" data-clipboard-target="#copy-wenan">
+            <img class="clock-icon" src="./assets/img/copy.png" alt=""> 复制分享文案
+        </button>
+    </div>
+
+    <div class="copy-text">
+        <textarea style="position: absolute;top: -10000px;" name="" id="copy-tkl" cols="30" rows="10"></textarea>
+        <div>
+            <span id="tkl"></span> 复制本条信息，打开手机TAO宝，即可参与拼团</div>
+        <button class="copy-btn" data-clipboard-target="#copy-tkl">
+            <img class="clock-icon" src="./assets/img/copy.png" alt=""> 复制淘口令
+        </button>
+    </div>
+
+    <div class="rule-wrap">
+        <div class="rule-title">
+            --拼团规则--
+        </div>
+        <ul>
+            <li>
+                <div>
+                    拼团方式
+                </div>
+                <ul class="sub-list">
+                    <li>自购后发起拼单</li>
+                    <li>通过他人分享的链接，参与拼团。</li>
+                </ul>
+            </li>
+            <li>
+                <div>如何在自购后发起拼单？</div>
+                <ul class="sub-list">
+                    <li> 点击“去购买”按钮，跳转至淘宝商品详情页；</li>
+                    <li>选择“去开团”；</li>
+                    <li>下单后点击“立即邀请”，分享口令给好友。</li>
+                </ul>
+            </li>
+            .......
+        </ul>
+
+        <a class="help-link" href="./618help.html">查看详细规则>></a>
+    </div>
+
+    <!-- <div id="canvas-wrap"> -->
+    <div style="position: absolute;top: -10000px;" id="canvas-wrap">
+        <img id="canvas-pic" class="main-pic" src="http://gw.alicdn.com/bao/uploaded/i2/699634751/TB2fQLMwx9YBuNjy0FfXXXIsVXa_!!699634751-0-item_pic.jpg"
+            alt="">
+        <div class="canvas-info">
+
+        </div>
+        <div class="canvas-qrcode">
+            <div id="qrcode"></div>
+            <div class="qrcode-tip">长按识别二维码</div>
+        </div>
+    </div>
+    <div style="display: none;" class="save-wrap">
+        <div class="save-pic-wrap">
+            <img onclick="closeImg()" class="save-close" src="./assets/img/close.png" alt="">
+            <img id="save-pic" src="" alt="">
+        </div>
+        <div class="save-tip">长按图片保存至相册</div>
+    </div>
+
+    <div class="btn-area">
+        <div onclick="makeCanvasPic()" id="download-canvas" href="" class="bottom-btn btn-left">
+            <img class="icon" src="./assets/img/share.png" alt=""> 生成图片
+        </div>
+        <a id="purchase" href="#" class="bottom-btn btn-right">
+            <img class="icon" src="./assets/img/buy.png" alt=""> 去购买
+        </a>
+    </div>
+    <!--在这里编写你的代码-->
+
+    <!--[if (gte IE 9)|!(IE)]><!-->
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <!--<![endif]-->
+    <!--[if lte IE 8 ]>
+<script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+<script src="assets/js/amazeui.ie8polyfill.min.js"></script>
+<![endif]-->
+    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script>
+    <script src="assets/js/babel.min.js"></script>
+    <!-- <script src="./assets/js/jcanvas.min.js"></script> -->
+    <script src="./assets/js/qrcode.js"></script>
+    <!-- <script src="./assets/js/qrious.js"></script> -->
+    <!-- <script src="./assets/js/jquery-qrcode.js"></script> -->
+    <script src="./assets/js/utils.js"></script>
+    <script src="./assets/js/clipboard.js"></script>
+    <script src="./assets/js/html2canvas.min.js"></script>
+    <script>
+        (function () {
+            $.ajax({
+                type: 'GET',
+                url: 'http://api.yangsa.net/commodityBase/getWordUrl',
+                dataType: 'json',
+                data: {
+                    title: GetQueryString('title'),
+                    origPrice: 4071,
+                    jddNum: GetQueryString('jdd_num'),
+                    jddPrice: GetQueryString('jdd_price'),
+                    pic: 'https:' + GetQueryString('pict_url'),
+                    clickUrl: 'https:' + GetQueryString('click_url'),
+                },
+                success: function (data) {
+                    // console.log(GetQueryString('click_url'))
+                    if (data.status != 1) {
+                        alert('商品存在或其他错误！')
+                        return
+                    }
+                    console.log(data.Data)
+                    var _tkl = data.Data.taokouling
+                    $('#copy-tkl').val(_tkl + '复制本条信息，打开手机TAO宝，即可参与拼团')
+                    $('#tkl').html(_tkl)
+                    new QRCode(document.getElementById("qrcode"),
+                        {
+                            text: data.Data.shortUrl,
+                            width: 90,
+                            height: 90,
+                            colorDark: "#000000",
+                            colorLight: "#ffffff",
+                            correctLevel: QRCode.CorrectLevel.H
+                        }
+                    );
+                }
+            })
+            $('#main-pic').attr('src', 'http:' + GetQueryString('pict_url'))
+            var title_html = `<img class='shop-icon' src="./assets/img/${GetQueryString('user_type') == 1 ? 'tianmao' : 'taobao'}.png" alt="">
+                              ${GetQueryString('title')}`
+            $('#title').html(title_html)
+            $('#purchase').attr('href', 'http:' + GetQueryString('click_url'))
+
+            var info_html = `            <div class="info-wrap">
+                <div class="info-left share-earning">分享赚￥4.85</div>
+                <div class="info-right goods-stock">仅剩${GetQueryString('total_stock')}件</div>
+            </div>
+            <div class="info-wrap">
+                <div class="info-left jdd">拼团价
+                    <span class="jdd-price">￥${GetQueryString('jdd_price')}</span>
+                    <span class="orig-price">￥${GetQueryString('orig_price')}</span>
+                </div>
+                <div class="info-right">${GetQueryString('jdd_num')}人拼团|
+                    <img class="clock-icon" src="./assets/img/time.png" alt="">${countDate(GetQueryString('oetime'))}天后结束
+                </div>
+            </div>`
+            $('#info').html(info_html)
+
+            var copy_html = `
+            <p>${GetQueryString('title')}</p>
+            <p> 【原价】${GetQueryString('orig_price')}元</p>
+            <p> 【拼团价】${GetQueryString('jdd_price')}元 ${GetQueryString('jdd_num')}人拼团购买即可享受优惠哦</p>
+            <p> 【分享赚】4.97元</p>`
+            $('#copy-ctx').html(copy_html)
+            var wenan = `${GetQueryString('title')}
+【原价】${GetQueryString('orig_price')}元
+【拼团价】${GetQueryString('jdd_price')}元 ${GetQueryString('jdd_num')}人拼团购买即可享受优惠哦
+【分享赚】4.97元`
+            $('#copy-wenan').val(wenan)
+
+            var clipboard = new Clipboard('.copy-btn');
+
+            clipboard.on('success', function (e) {
+                console.info('Action:', e.action);
+                console.info('Text:', e.text);
+                console.info('Trigger:', e.trigger);
+                alert('复制成功！')
+                e.clearSelection();
+            });
+
+            clipboard.on('error', function (e) {
+                console.error('Action:', e.action);
+                console.error('Trigger:', e.trigger);
+            });
+
+
+            var canvas_html = `            <div class="canvas-title">
+                <img class="canvas-icon" src="./assets/img/${GetQueryString('user_type') == 1 ? 'tianmao' : 'taobao'}.png" alt="">
+                ${GetQueryString('title')}
+            </div>
+            <div class="canvas-item">
+                <div class="info-left">单买价 ￥${GetQueryString('orig_price')}</div>
+                <div class="info-right">仅剩${GetQueryString('total_stock')}件</div>
+            </div>
+            <div class="canvas-item">
+                <div class="info-left jdd">${GetQueryString('jdd_num')}人拼团价 <span class="jdd-price">￥${GetQueryString('jdd_price')}</span> </div>
+                <div class="info-right">
+                    <img class="clock-icon" src="./assets/img/time.png" alt="">
+                    ${countDate(GetQueryString('oetime'))}天后结束
+                </div>
+            </div>`
+            $('.canvas-info').html(canvas_html)
+            var url = GetQueryString('pict_url')
+            img2base64(url, "Anonymous").then(res => {
+                $('#canvas-pic').attr('src', res)
+            })
+        })();
+
+        function makeCanvasPic() {
+            // alert('make canvas pic')
+            var options = {
+                allowTaint: true
+            }
+            html2canvas(document.getElementById('canvas-wrap'), options).then(function (canvas) {
+                // document.body.appendChild(canvas);
+                // saveFile(canvas.toDataURL('image/jpeg',1),'aaa.png')
+                $("#save-pic").attr('src', canvas.toDataURL('image/jpeg', 1))
+                $(".save-wrap").css('display', 'block')
+            });
+        }
+
+        function closeImg() {
+            $(".save-wrap").css('display', 'none')
+        }
+    </script>
+</body>
+
+</html>

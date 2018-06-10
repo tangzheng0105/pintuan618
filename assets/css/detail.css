@@ -1,0 +1,240 @@
+#main-pic {
+    width: 100%;
+}
+
+.wrap {
+    width: 94%;
+    margin: 0 auto;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+#title {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#title .shop-icon {
+    width: 14px;
+    height: 14px;
+}
+
+.info-wrap {
+    overflow: hidden;
+    font-size: 12px;
+    margin-top: 8px;
+}
+
+.info-left {
+    float: left;
+}
+
+.info-right {
+    float: right;
+}
+
+.clock-icon {
+    width: 12px;
+    height: 12px;
+    margin-top: -3px;
+}
+
+.share-earning {
+    color: #ff003c;
+}
+
+.goods-stock {
+    color: #888;
+}
+
+.orig-price {
+    color: #888;
+    text-decoration: line-through;
+}
+
+.jdd {
+    margin-top: -8px;
+    color: #ff003c;
+}
+
+.jdd-price {
+    color: #ff003c;
+    font-size: 18px;
+    margin-top: -8px;
+}
+
+.copy-text {
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+    border: 1px solid #ff003c;
+    border-radius: 4px;
+    padding: 6px;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 30px;
+}
+
+.copy-text p {
+    margin: 0;
+    margin-top: 6px;
+}
+
+.copy-text .copy-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #ff003c;
+    color: #fff;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border: none;
+}
+
+.rule-wrap {
+    margin-top: 30px;
+    border-top: 10px solid #f5f5f5;
+    font-size: 12px;
+    padding: 3%;
+}
+
+.rule-title {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.sub-list {
+    color:#888;
+    margin: 0;
+    margin-top: 6px;
+}
+
+.help-link {
+    text-decoration: underline;
+    text-align: right;
+    font-size: 14px;
+    float: right;
+}
+
+.btn-area {
+    overflow: hidden;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.bottom-btn {
+    width: 50%;
+    color: #fff;
+    font-size: 20px;
+    padding: 12px;
+    text-align: center;
+}
+
+.bottom-btn .icon {
+    width: 20px;
+    margin-top: -5px;
+}
+
+.btn-left {
+    float: left;
+    background-color: #ffb415;
+}
+
+.btn-right {
+    float: right;
+    background-color: #ff003c;
+}
+
+#canvas-wrap {
+    width: 320px;
+    overflow: hidden;
+}
+
+#canvas-wrap .main-pic {
+    width: 100%;
+}
+
+.canvas-info {
+    overflow: hidden;
+    display: inline-block;
+    width: 200px;
+    font-size: 12px;
+    padding-left: 8px;
+    padding-top: 8px;
+}
+
+#qrcode {
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.canvas-qrcode {
+    width: 120px;
+    height: 150px;
+    float: right;
+    overflow: hidden;
+    color: #888;
+}
+
+#save-pic {
+ width: 100%;
+}
+
+.save-pic-wrap {
+    width: 90%;
+    position: absolute;
+    left: 5%;
+    top: 40px;
+}
+
+.save-wrap {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    bottom: 0px;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4)
+}
+
+.qrcode-tip {
+    color: #ff003c;
+    font-size: 12px;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.canvas-title {
+    font-size: 15px;
+    font-weight: bold;
+
+}
+
+.canvas-icon {
+    width: 14px;
+    margin-top: -4px;
+}
+
+.canvas-item {
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.save-close {
+    position: absolute;
+    width: 24px;
+    height: 24px;;
+    right: -12px;
+    top: -12px;
+}
+
+.save-tip {
+    text-align: center;
+    font-size: 14px;
+    color: #fff;
+    padding: 10px 0;
+}

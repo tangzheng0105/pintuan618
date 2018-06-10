@@ -1,0 +1,30 @@
+body {
+    background:#ff003c; /* 一些不支持背景渐变的浏览器 */  
+    background:-moz-linear-gradient(left, #ff0093, #ff003c);  
+    background:-mos-linear-gradient(left, #ff0093, #ff003c);  
+    background:-webkit-linear-gradient(left, #ff0093, #ff003c);  
+    background:-o-linear-gradient(left, r#ff0093ed, #ff003c); 
+    padding-bottom: 20px;
+}
+
+.header-wrap {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    width: 88%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.header-title {
+    text-align: center;
+}
+
+.header-body {
+    color: #888;
+    font-size: 12px;
+}
+
+.help-img {
+    width: 80%;
+}
