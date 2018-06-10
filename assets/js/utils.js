@@ -52,6 +52,7 @@ function saveFile(data, filename) {
  */
 
 function countDate(date) {
+    if(!date) return
     var s1 = date;
     s1 = new Date(s1.replace(/-/g, "/"));
     s2 = new Date();//当前日期：2017-04-24

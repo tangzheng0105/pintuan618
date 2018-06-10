@@ -145,7 +145,7 @@
                 dataType: 'json',
                 data: {
                     title: GetQueryString('title'),
-                    origPrice: 4071,
+                    origPrice: GetQueryString('orig_price'),
                     jddNum: GetQueryString('jdd_num'),
                     jddPrice: GetQueryString('jdd_price'),
                     pic: 'https:' + GetQueryString('pict_url'),
@@ -180,7 +180,7 @@
             $('#purchase').attr('href', 'http:' + GetQueryString('click_url'))
 
             var info_html = `            <div class="info-wrap">
-                <div class="info-left share-earning">分享赚￥4.85</div>
+                <div class="info-left share-earning">${GetQueryString('fenyongRate')== 0?'':'分享赚￥'+GetQueryString('fenyongRate')*GetQueryString('jdd_price')*GetQueryString('commission_rate')}</div>
                 <div class="info-right goods-stock">仅剩${GetQueryString('total_stock')}件</div>
             </div>
             <div class="info-wrap">
@@ -198,12 +198,12 @@
             <p>${GetQueryString('title')}</p>
             <p> 【原价】${GetQueryString('orig_price')}元</p>
             <p> 【拼团价】${GetQueryString('jdd_price')}元 ${GetQueryString('jdd_num')}人拼团购买即可享受优惠哦</p>
-            <p> 【分享赚】4.97元</p>`
+            <p> ${GetQueryString('fenyongRate')== 0?'':'【分享赚】'+GetQueryString('fenyongRate')*GetQueryString('jdd_price')*GetQueryString('commission_rate')+'元'}</p>`
             $('#copy-ctx').html(copy_html)
             var wenan = `${GetQueryString('title')}
 【原价】${GetQueryString('orig_price')}元
 【拼团价】${GetQueryString('jdd_price')}元 ${GetQueryString('jdd_num')}人拼团购买即可享受优惠哦
-【分享赚】4.97元`
+${GetQueryString('fenyongRate')== 0?'':'【分享赚】'+GetQueryString('fenyongRate')*GetQueryString('jdd_price')*GetQueryString('commission_rate')+'元'}`
             $('#copy-wenan').val(wenan)
 
             var clipboard = new Clipboard('.copy-btn');
