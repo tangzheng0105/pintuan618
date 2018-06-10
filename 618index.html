@@ -38,7 +38,7 @@
         <a href="./618help.html" class="rules">拼团规则</a>
     </div>
     <div class="goods-wrap">
-         
+
     </div>
     <!--在这里编写你的代码-->
 
@@ -59,7 +59,7 @@
         $(function () {
             // dropload
             var pageNo = 1
-            var appData = JSON.parse(GetQueryString('yangsaParameters')) 
+            var appData = JSON.parse(GetQueryString('yangsaParameters'))
             console.log(appData)
             $('body').dropload({
                 scrollArea: window,
@@ -68,32 +68,33 @@
                         type: 'GET',
                         url: 'http://api.yangsa.net/commodityBase/getMaterialUrl',
                         dataType: 'json',
-                        data:{
-                            PID:appData.pid,
-                            materialId:4071,
+                        data: {
+                            PID: appData.pid,
+                            materialId: 4071,
                             pageNo: pageNo,
-                            pageSize:20                          
+                            pageSize: 20
                         },
-                        success: function (data) {                            
-                            if(data.status == 0) {
+                        success: function (data) {
+                            if (data.status == 0) {
                                 alert('页面错误！')
                                 return
                             }
-                            pageNo +=1
+                            pageNo += 1
                             var goodsList = data.Data.tbk_sc_optimus_material_response.result_list.map_data
                             // console.log(goodsList)
                             var result = '';
-                            goodsList.forEach(function(item) {                                
-                                result += `        <div class="goods-item">
+                            goodsList.forEach(function (item) {
+                                if (item.jdd_num) {
+                                    result += `        <div class="goods-item">
                                                         <div class="goods-img">
                                                             <img class="main-img" src="http:${item.pict_url}_310x310.jpg" alt="">
                                                         </div>
                                                         <div class="goods-info">
                                                             <div class="goods-title">
-                                                                <img class="shop-type" src="./assets/img/${item.user_type==1?'tianmao':'taobao'}.png" alt="">${item.title}
+                                                                <img class="shop-type" src="./assets/img/${item.user_type == 1 ? 'tianmao' : 'taobao'}.png" alt="">${item.title}
                                                             </div>
                                                             <div class="goods-share">
-                                                                <div class="share-earning">${appData.fenyongRate == 0?'':'分享赚￥'+appData.fenyongRate*item.jdd_price*item.commission_rate}</div>
+                                                                <div class="share-earning">${appData.fenyongRate == 0 ? '' : '分享赚￥' + appData.fenyongRate * item.jdd_price * item.commission_rate}</div>
                                                                 <div class="last-num">仅剩${item.total_stock}件</div>
                                                             </div>
                                                             <div class="goods-price">
@@ -113,9 +114,12 @@
                                                             </div>
                                                         </div>
                                                     </div>`
-                            }); 
+                                } else {
+                                    result += ''
+                                }
+                            });
 
-                            
+
                             // 为了测试，延迟1秒加载
                             setTimeout(function () {
                                 $('.goods-wrap').append(result);

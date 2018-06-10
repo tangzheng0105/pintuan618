@@ -58,5 +58,6 @@ function countDate(date) {
     s2 = new Date();//当前日期：2017-04-24
     var days = s2.getTime() - s1.getTime();
     var time = parseInt(days / (1000 * 60 * 60 * 24));
+    if(time == 0) return '今'
     return -time
 }
