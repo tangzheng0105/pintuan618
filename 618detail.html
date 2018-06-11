@@ -90,7 +90,7 @@
         <a class="help-link" href="./618help.html">查看详细规则>></a>
     </div>
 
-    <!-- <div id="canvas-wrap"> -->
+    <!-- <div style="margin-bottom: 90px;" id="canvas-wrap"> -->
     <div style="position: absolute;top: -10000px;" id="canvas-wrap">
         <img id="canvas-pic" class="main-pic" src="http://gw.alicdn.com/bao/uploaded/i2/699634751/TB2fQLMwx9YBuNjy0FfXXXIsVXa_!!699634751-0-item_pic.jpg"
             alt="">
@@ -107,12 +107,12 @@
             <img onclick="closeImg()" class="save-close" src="./assets/img/close.png" alt="">
             <img id="save-pic" src="" alt="">
         </div>
-        <div class="save-tip">长按图片保存至相册</div>
+        <div style="display: none;" class="save-tip">长按图片保存至相册</div>
     </div>
 
     <div class="btn-area">
         <div onclick="makeCanvasPic()" id="download-canvas" href="" class="bottom-btn btn-left">
-            <img class="icon" src="./assets/img/share.png" alt=""> 生成图片
+            <img class="icon" src="./assets/img/share.png" alt=""> 保存图片
         </div>
         <a id="purchase" href="#" class="bottom-btn btn-right">
             <img class="icon" src="./assets/img/buy.png" alt=""> 去购买
@@ -121,15 +121,15 @@
     <!--在这里编写你的代码-->
 
     <!--[if (gte IE 9)|!(IE)]><!-->
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./assets/js/jquery.min.js"></script>
     <!--<![endif]-->
     <!--[if lte IE 8 ]>
 <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
 <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
-    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script>
-    <script src="assets/js/babel.min.js"></script>
+    <!-- <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
+    <!-- <script src="assets/js/babel.min.js"></script> -->
     <!-- <script src="./assets/js/jcanvas.min.js"></script> -->
     <script src="./assets/js/qrcode.js"></script>
     <!-- <script src="./assets/js/qrious.js"></script> -->
@@ -138,49 +138,55 @@
     <script src="./assets/js/clipboard.js"></script>
     <script src="./assets/js/html2canvas.min.js"></script>
     <script>
-        (function () {
-            $.ajax({
-                type: 'GET',
-                url: 'http://api.yangsa.net/commodityBase/getWordUrl',
-                dataType: 'json',
-                data: {
-                    title: GetQueryString('title'),
-                    origPrice: GetQueryString('orig_price'),
-                    jddNum: GetQueryString('jdd_num'),
-                    jddPrice: GetQueryString('jdd_price'),
-                    pic: 'https:' + GetQueryString('pict_url'),
-                    clickUrl: 'https:' + GetQueryString('click_url'),
-                },
-                success: function (data) {
-                    // console.log(GetQueryString('click_url'))
-                    if (data.status != 1) {
-                        alert('商品存在或其他错误！')
-                        return
-                    }
-                    console.log(data.Data)
-                    var _tkl = data.Data.taokouling
-                    $('#copy-tkl').val(_tkl + '复制本条信息，打开手机TAO宝，即可参与拼团')
-                    $('#tkl').html(_tkl)
-                    new QRCode(document.getElementById("qrcode"),
-                        {
-                            text: data.Data.shortUrl,
-                            width: 90,
-                            height: 90,
-                            colorDark: "#000000",
-                            colorLight: "#ffffff",
-                            correctLevel: QRCode.CorrectLevel.H
-                        }
-                    );
-                }
-            })
-            $('#main-pic').attr('src', 'http:' + GetQueryString('pict_url'))
-            var title_html = `<img class='shop-icon' src="./assets/img/${GetQueryString('user_type') == 1 ? 'tianmao' : 'taobao'}.png" alt="">
-                              ${GetQueryString('title')}`
-            $('#title').html(title_html)
-            $('#purchase').attr('href', 'http:' + GetQueryString('click_url'))
+        var userAgent = window.navigator.userAgent
+        var isInApp = /yangsaapp/i.test(userAgent)
+        console.log(isInApp)
+    </script>
+    <script>
 
-            var info_html = `            <div class="info-wrap">
-                <div class="info-left share-earning">${GetQueryString('fenyongRate')== 0?'':'分享赚￥'+GetQueryString('fenyongRate')*GetQueryString('jdd_price')*GetQueryString('commission_rate')}</div>
+            (function () {
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://api.yangsa.net/commodityBase/getWordUrl',
+                    dataType: 'json',
+                    data: {
+                        title: GetQueryString('title'),
+                        origPrice: GetQueryString('orig_price'),
+                        jddNum: GetQueryString('jdd_num'),
+                        jddPrice: GetQueryString('jdd_price'),
+                        pic: 'https:' + GetQueryString('pict_url'),
+                        clickUrl: 'https:' + GetQueryString('click_url'),
+                    },
+                    success: function (data) {
+                        // console.log(GetQueryString('click_url'))
+                        if (data.status != 1) {
+                            alert('商品存在或其他错误！')
+                            return
+                        }
+                        console.log(data.Data)
+                        var _tkl = data.Data.taokouling
+                        $('#copy-tkl').val(_tkl + '复制本条信息，打开手机TAO宝，即可参与拼团')
+                        $('#tkl').html(_tkl)
+                        new QRCode(document.getElementById("qrcode"),
+                            {
+                                text: data.Data.shortUrl,
+                                width: 90,
+                                height: 90,
+                                colorDark: "#000000",
+                                colorLight: "#ffffff",
+                                correctLevel: QRCode.CorrectLevel.H
+                            }
+                        );
+                    }
+                })
+                $('#main-pic').attr('src', 'http:' + GetQueryString('pict_url'))
+                var title_html = `<img class='shop-icon' src="./assets/img/${GetQueryString('user_type') == 1 ? 'tianmao' : 'taobao'}.png" alt="">
+                              ${GetQueryString('title')}`
+                $('#title').html(title_html)
+                $('#purchase').attr('href', 'http:' + GetQueryString('click_url'))
+
+                var info_html = `            <div class="info-wrap">
+                <div class="info-left share-earning">${GetQueryString('fenyongRate') == 0 ? '' : '分享赚￥' + GetQueryString('fenyongRate') * GetQueryString('jdd_price') * GetQueryString('commission_rate')}</div>
                 <div class="info-right goods-stock">仅剩${GetQueryString('total_stock')}件</div>
             </div>
             <div class="info-wrap">
@@ -188,41 +194,41 @@
                     <span class="jdd-price">￥${GetQueryString('jdd_price')}</span>
                     <span class="orig-price">￥${GetQueryString('orig_price')}</span>
                 </div>
-                <div class="info-right">${GetQueryString('jdd_num')}人拼团|
+                <div class="info-right margin6px">${GetQueryString('jdd_num')}人拼团|
                     <img class="clock-icon" src="./assets/img/time.png" alt="">${countDate(GetQueryString('oetime'))}天后结束
                 </div>
             </div>`
-            $('#info').html(info_html)
+                $('#info').html(info_html)
 
-            var copy_html = `
+                var copy_html = `
             <p>${GetQueryString('title')}</p>
             <p> 【原价】${GetQueryString('orig_price')}元</p>
             <p> 【拼团价】${GetQueryString('jdd_price')}元 ${GetQueryString('jdd_num')}人拼团购买即可享受优惠哦</p>
-            <p> ${GetQueryString('fenyongRate')== 0?'':'【分享赚】'+GetQueryString('fenyongRate')*GetQueryString('jdd_price')*GetQueryString('commission_rate')+'元'}</p>`
-            $('#copy-ctx').html(copy_html)
-            var wenan = `${GetQueryString('title')}
+            <p> ${GetQueryString('fenyongRate') == 0 ? '' : '【分享赚】' + GetQueryString('fenyongRate') * GetQueryString('jdd_price') * GetQueryString('commission_rate') + '元'}</p>`
+                $('#copy-ctx').html(copy_html)
+                var wenan = `${GetQueryString('title')}
 【原价】${GetQueryString('orig_price')}元
 【拼团价】${GetQueryString('jdd_price')}元 ${GetQueryString('jdd_num')}人拼团购买即可享受优惠哦
-${GetQueryString('fenyongRate')== 0?'':'【分享赚】'+GetQueryString('fenyongRate')*GetQueryString('jdd_price')*GetQueryString('commission_rate')+'元'}`
-            $('#copy-wenan').val(wenan)
+${GetQueryString('fenyongRate') == 0 ? '' : '【分享赚】' + GetQueryString('fenyongRate') * GetQueryString('jdd_price') * GetQueryString('commission_rate') + '元'}`
+                $('#copy-wenan').val(wenan)
 
-            var clipboard = new Clipboard('.copy-btn');
+                var clipboard = new Clipboard('.copy-btn');
 
-            clipboard.on('success', function (e) {
-                console.info('Action:', e.action);
-                console.info('Text:', e.text);
-                console.info('Trigger:', e.trigger);
-                alert('复制成功！')
-                e.clearSelection();
-            });
+                clipboard.on('success', function (e) {
+                    console.info('Action:', e.action);
+                    console.info('Text:', e.text);
+                    console.info('Trigger:', e.trigger);
+                    alert('复制成功！')
+                    e.clearSelection();
+                });
 
-            clipboard.on('error', function (e) {
-                console.error('Action:', e.action);
-                console.error('Trigger:', e.trigger);
-            });
+                clipboard.on('error', function (e) {
+                    console.error('Action:', e.action);
+                    console.error('Trigger:', e.trigger);
+                });
 
 
-            var canvas_html = `            <div class="canvas-title">
+                var canvas_html = `            <div class="canvas-title">
                 <img class="canvas-icon" src="./assets/img/${GetQueryString('user_type') == 1 ? 'tianmao' : 'taobao'}.png" alt="">
                 ${GetQueryString('title')}
             </div>
@@ -232,17 +238,17 @@ ${GetQueryString('fenyongRate')== 0?'':'【分享赚】'+GetQueryString('fenyong
             </div>
             <div class="canvas-item">
                 <div class="info-left jdd">${GetQueryString('jdd_num')}人拼团价 <span class="jdd-price">￥${GetQueryString('jdd_price')}</span> </div>
-                <div class="info-right">
+                <div class="info-right margin4px">
                     <img class="clock-icon" src="./assets/img/time.png" alt="">
                     ${countDate(GetQueryString('oetime'))}天后结束
                 </div>
             </div>`
-            $('.canvas-info').html(canvas_html)
-            var url = GetQueryString('pict_url')
-            img2base64(url, "Anonymous").then(res => {
-                $('#canvas-pic').attr('src', res)
-            })
-        })();
+                $('.canvas-info').html(canvas_html)
+                var url = GetQueryString('pict_url')
+                img2base64(url, "Anonymous").then(res => {
+                    $('#canvas-pic').attr('src', res)
+                })
+            })();
 
         function makeCanvasPic() {
             // alert('make canvas pic')
@@ -254,6 +260,12 @@ ${GetQueryString('fenyongRate')== 0?'':'【分享赚】'+GetQueryString('fenyong
                 // saveFile(canvas.toDataURL('image/jpeg',1),'aaa.png')
                 $("#save-pic").attr('src', canvas.toDataURL('image/jpeg', 1))
                 $(".save-wrap").css('display', 'block')
+                if (isInApp) {
+                    window.location.href = "yangsa_html2app://?share_pic=" + canvas.toDataURL('image/jpeg', 1);
+                } else {
+                    $('.save-tip').css('display', 'block')
+                }
+
             });
         }
 

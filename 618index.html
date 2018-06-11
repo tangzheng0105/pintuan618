@@ -43,24 +43,28 @@
     <!--在这里编写你的代码-->
 
     <!--[if (gte IE 9)|!(IE)]><!-->
-    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
-    <script src="assets/js/babel.min.js"></script>
-    <script src="assets/js/babel.min.js"></script>
+    <script src="./assets/js/jquery.min.js"></script>
+    <!-- <script src="./assets/js/babel.min.js"></script> -->
     <!--<![endif]-->
     <!--[if lte IE 8 ]>
 <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
 <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
-    <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script>
+    <!-- <script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script> -->
     <script src="./assets/js/dropload.min.js"></script>
+    <script src="./assets/js/lazyload.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-beta.2/lazyload.js"></script> -->
+    <!-- <script src="./assets/js/html2canvas.min.js"></script> -->
     <script src="./assets/js/utils.js"></script>
     <script>
+        
         $(function () {
             // dropload
             var pageNo = 1
+            console.log(GetQueryString('yangsaParameters'))
             var appData = JSON.parse(GetQueryString('yangsaParameters'))
-            console.log(appData)
+            
             $('body').dropload({
                 scrollArea: window,
                 loadDownFn: function (me) {
@@ -76,18 +80,20 @@
                         },
                         success: function (data) {
                             if (data.status == 0) {
-                                alert('页面错误！')
+                                alert('没有更多商品！')
                                 return
                             }
+                            
                             pageNo += 1
                             var goodsList = data.Data.tbk_sc_optimus_material_response.result_list.map_data
-                            // console.log(goodsList)
+                            // if(goodsList.length == 0) return
                             var result = '';
                             goodsList.forEach(function (item) {
                                 if (item.jdd_num) {
-                                    result += `        <div class="goods-item">
+                                    result += `      <a href="./618detail.html?user_type=${item.user_type}&pict_url=${item.pict_url}&total_stock=${item.total_stock}&title=${item.title}&orig_price=${item.orig_price}&oetime=${item.oetime}&jdd_num=${item.jdd_num}&jdd_price=${item.jdd_price}&click_url=${item.click_url}&commission_rate=${item.commission_rate}&fenyongRate=${appData.fenyongRate}">
+                                       <div class="goods-item">
                                                         <div class="goods-img">
-                                                            <img class="main-img" src="http:${item.pict_url}_310x310.jpg" alt="">
+                                                            <img class="main-img lazyload" width="130" height="130" data-src="http:${item.pict_url}_310x310.jpg" alt="">
                                                         </div>
                                                         <div class="goods-info">
                                                             <div class="goods-title">
@@ -108,12 +114,12 @@
                                                                     ${item.jdd_num}人拼团
                                                                     <span class="after-price">￥${item.jdd_price}</span>
                                                                     <div class="ctrl-btn">
-                                                                            <a href="./618detail.html?user_type=${item.user_type}&pict_url=${item.pict_url}&total_stock=${item.total_stock}&title=${item.title}&orig_price=${item.orig_price}&oetime=${item.oetime}&jdd_num=${item.jdd_num}&jdd_price=${item.jdd_price}&click_url=${item.click_url}&commission_rate=${item.commission_rate}&fenyongRate=${appData.fenyongRate}">去拼团</a> 
+                                                                           去拼团
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>`
+                                                    </div></a> `
                                 } else {
                                     result += ''
                                 }
@@ -125,6 +131,7 @@
                                 $('.goods-wrap').append(result);
                                 // 每次数据加载完，必须重置
                                 me.resetload();
+                                lazyload()
                             }, 1000);
                         },
                         error: function (xhr, type) {
