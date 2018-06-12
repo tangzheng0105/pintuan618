@@ -28,6 +28,7 @@
 
     <link rel="stylesheet" href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.min.css">
     <link rel="stylesheet" href="./assets/css/detail.css">
+    <link rel="stylesheet" href="./assets/css/toastr.min.css">
 </head>
 
 <body>
@@ -132,6 +133,7 @@
     <!-- <script src="assets/js/babel.min.js"></script> -->
     <!-- <script src="./assets/js/jcanvas.min.js"></script> -->
     <script src="./assets/js/qrcode.js"></script>
+    <script src="./assets/js/toastr.min.js"></script>
     <!-- <script src="./assets/js/qrious.js"></script> -->
     <!-- <script src="./assets/js/jquery-qrcode.js"></script> -->
     <script src="./assets/js/utils.js"></script>
@@ -139,8 +141,9 @@
     <script src="./assets/js/html2canvas.min.js"></script>
     <script>
         var userAgent = window.navigator.userAgent
+        var isInAndroid = /android/i.test(userAgent)
         var isInApp = /yangsaapp/i.test(userAgent)
-        console.log(isInApp)
+        
     </script>
     <script>
 
@@ -160,7 +163,8 @@
                     success: function (data) {
                         // console.log(GetQueryString('click_url'))
                         if (data.status != 1) {
-                            alert('商品存在或其他错误！')
+                            // alert('商品存在或其他错误！')
+                            toastr.info('商品存在或其他错误！')
                             return
                         }
                         console.log(data.Data)
@@ -218,7 +222,15 @@ ${GetQueryString('fenyongRate') == 0 ? '' : '【分享赚】' + GetQueryString('
                     console.info('Action:', e.action);
                     console.info('Text:', e.text);
                     console.info('Trigger:', e.trigger);
-                    alert('复制成功！')
+                    if (isInApp) {
+                        if (isInAndroid) {
+                            document.location = "yangsa_html2app://copy?copy_text=" + encodeURIComponent(e.text)
+                        } else {
+                            window.location.href = "yangsa_html2app://copy?copy_text=" + encodeURIComponent(e.text)
+                        }
+                    }                    
+                    // alert('复制成功！')
+                    toastr.success('复制成功！')
                     e.clearSelection();
                 });
 
@@ -251,7 +263,6 @@ ${GetQueryString('fenyongRate') == 0 ? '' : '【分享赚】' + GetQueryString('
             })();
 
         function makeCanvasPic() {
-            // alert('make canvas pic')
             var options = {
                 allowTaint: true
             }
@@ -259,13 +270,20 @@ ${GetQueryString('fenyongRate') == 0 ? '' : '【分享赚】' + GetQueryString('
                 // document.body.appendChild(canvas);
                 // saveFile(canvas.toDataURL('image/jpeg',1),'aaa.png')
                 $("#save-pic").attr('src', canvas.toDataURL('image/jpeg', 1))
-                $(".save-wrap").css('display', 'block')
+                $(".save-wrap").css('display', 'block')    
                 if (isInApp) {
-                    window.location.href = "yangsa_html2app://?share_pic=" + canvas.toDataURL('image/jpeg', 1);
+                    console.log("I am in app")
+                    if (isInAndroid) {
+                        console.log("I am in android")
+                        document.location = "yangsa_html2app://share?share_pic=" + encodeURIComponent(canvas.toDataURL('image/jpeg', 1));
+                    } else {
+                        console.log("I am in ios")
+                        window.location.href = "yangsa_html2app://share?share_pic=" + encodeURIComponent(canvas.toDataURL('image/jpeg', 1));
+                    }
                 } else {
+                    console.log("I am in browser")
                     $('.save-tip').css('display', 'block')
                 }
-
             });
         }
 
