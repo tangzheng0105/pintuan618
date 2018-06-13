@@ -47,8 +47,6 @@
         <div id="copy-ctx">
 
         </div>
-        <p> ...........</p>
-        <p> 复制这条消息。。。。。</p>
         <button class="copy-btn" data-clipboard-target="#copy-wenan">
             <img class="clock-icon" src="./assets/img/copy.png" alt=""> 复制分享文案
         </button>
@@ -207,13 +205,12 @@
                 var copy_html = `
             <p>${GetQueryString('title')}</p>
             <p> 【原价】${GetQueryString('orig_price')}元</p>
-            <p> 【拼团价】${GetQueryString('jdd_price')}元 ${GetQueryString('jdd_num')}人拼团购买即可享受优惠哦</p>
-            <p> ${GetQueryString('fenyongRate') == 0 ? '' : '【分享赚】' + GetQueryString('fenyongRate') * GetQueryString('jdd_price') * GetQueryString('commission_rate') + '元'}</p>`
+            <p> 【拼团价】 ${GetQueryString('jdd_num')}人拼团购买即可享受${GetQueryString('jdd_price')}元</p>
+            `
                 $('#copy-ctx').html(copy_html)
                 var wenan = `${GetQueryString('title')}
 【原价】${GetQueryString('orig_price')}元
-【拼团价】${GetQueryString('jdd_price')}元 ${GetQueryString('jdd_num')}人拼团购买即可享受优惠哦
-${GetQueryString('fenyongRate') == 0 ? '' : '【分享赚】' + GetQueryString('fenyongRate') * GetQueryString('jdd_price') * GetQueryString('commission_rate') + '元'}`
+【拼团价】${GetQueryString('jdd_num')}人拼团购买即可享受${GetQueryString('jdd_price')}元`
                 $('#copy-wenan').val(wenan)
 
                 var clipboard = new Clipboard('.copy-btn');
